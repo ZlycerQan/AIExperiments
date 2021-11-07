@@ -187,6 +187,9 @@ int main() {
 		log(i + 1);
 		maze tmp = mz;
 		log(ans[i]);
+		if (i > 0) {
+			continue;
+		}
 		for (pos j : ans[i]) {
 			tmp[j.first][j.second] = 2;
 		}
