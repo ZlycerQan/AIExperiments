@@ -148,7 +148,7 @@ void mutate(group& popu) {
 	}
 }
 
-flo run_genetic_algorithm() {
+void run_genetic_algorithm() {
 	auto gen = get_random(LOWER_BOUND, UPPER_BOUND);
 	group popu;
 	for (int i = 1; i <= INITIAL_NUMBER; ++ i) {
