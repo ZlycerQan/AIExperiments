@@ -1,11 +1,22 @@
+// pso_algorithm.cpp
 #include <iostream>
 #include <array>
 #include <random>
 #include <chrono>
+#include <iomanip>
+
+int identification() {
+	std::cout << "+------------+-----------+" << '\n';
+	std::cout << "| 1908090117 | Liquanzhi |" << '\n';
+	std::cout << "+------------+-----------+" << '\n';
+	return 1;
+}
+
+int me = identification();
 
 using flo = double;
 
-constexpr int NUMBER_OF_EVOLUTION = 860000;
+constexpr int NUMBER_OF_EVOLUTION = 862353;
 constexpr int X_NUMBER = 30;
 constexpr int PARTICLE_NUMBER = 30;
 constexpr flo UPPER_BOUND = 2;
@@ -48,6 +59,7 @@ flo f(const particle& x) {
 
 void run_pso() {
 	flo result = 1e9;
+	particle result_pos;
 	auto gen = get_real_random(0, 1);
 	swarm sw = create_initial_swarm();
 	std::array<flo, PARTICLE_NUMBER> p_value;
@@ -63,7 +75,10 @@ void run_pso() {
 		flo g_value = 1e9;
 		for (int i = 0; i < PARTICLE_NUMBER; ++ i) {
 			flo y = f(sw[i]);
-			result = std::min(result, y);
+			if (y < result) {
+				result = y;
+				result_pos = sw[i];
+			}
 			if (y < p_value[i]) {
 				p_value[i] = y;
 				p_pos[i] = sw[i];
@@ -90,6 +105,10 @@ void run_pso() {
 				}
 			}
 		}
+	}
+	
+	for (int i = 0; i < X_NUMBER; ++ i) {
+		std::cout << "x" << i + 1 << ": " << std::fixed << std::setprecision(2) << result_pos[i] << '\n'; 	
 	}
 	printf("%.2lf", result);
 }
